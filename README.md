@@ -1,69 +1,28 @@
 # Binary Brains Booth Leaderboard
 
-Live leaderboard for the Binary Brains (USAL Computer Science Club) booth event.
-Four booths compete, staff add points as students finish booth challenges, and the projector shows the race.
+Arcade-style live leaderboard for the Binary Brains (USAL Computer Science Club) booth event.
+Four booths race (Computing, Cybersecurity, Data Science, General), staff add points, and the projector shows it with animations, chiptune sounds and Byte the mascot.
 
-Runs **100% offline**: plain HTML/CSS/JS, no internet, no install, no server.
+Runs 100% offline: plain HTML/CSS/JS, no install, no internet.
 
-| Booth | Color |
-| --- | --- |
-| Computing | blue |
-| Cybersecurity | red |
-| Data Science | green |
-| General (non-CS students) | pink |
+## Run it
 
-## Event-day setup
+1. Double-click `index.html` (Chrome or Edge).
+2. Open **Projector display** and **Staff control panel** in the same browser.
+3. `Win + P` → **Extend**, drag the display onto the projector, press `F` for fullscreen.
+4. Click the display once to turn on sound.
 
-1. Copy this folder to the event laptop.
-2. Double-click `index.html` (Chrome or Edge recommended).
-3. Open **Projector display** and **Staff control panel**. Both must be in the same browser.
-4. Plug in the projector, press `Win + P`, and choose **Extend**.
-5. Drag the display window onto the projector and press `F` for fullscreen.
-6. Keep the control panel on the laptop screen. Every click shows up on the projector instantly.
+Scores are saved in the browser and survive restarts. Only **Reset all scores** (type `RESET`) clears them.
 
-Scores are saved in the browser, so closing a tab or restarting the laptop keeps them.
-Only **Reset all scores** in the control panel clears them (you have to type `RESET` to confirm).
+## Keys
 
-### Only one screen (mirrored projector)?
+`1`-`4` add a point · `Shift`+number remove one · `Ctrl+Z` undo · `M` mute · `F` fullscreen (display)
 
-Use the display page alone with the keyboard:
+## Credits
 
-| Key | Action |
-| --- | --- |
-| `1` `2` `3` `4` | +1 point to Computing, Cyber, Data, General |
-| `Shift` + `1`-`4` | -1 point (fix a mistake) |
-| `U` or `Ctrl + Z` | Undo the last action |
-| `F` | Toggle fullscreen |
+- Font: [Pixelify Sans](https://fonts.google.com/specimen/Pixelify+Sans) (SIL Open Font License, see `assets/fonts/OFL-LICENSE.txt`)
+- Icons: [Pixelarticons](https://pixelarticons.com) (MIT)
 
-The same number keys work in the control panel.
+## Screenshots
 
-## What is on the projector
-
-- Racing bars that fill toward the goal (default 50, change it in the control panel). Once a team passes the goal, the leader's bar is full and the others are relative to it.
-- Rank, points, share of all points, distance behind 1st, and points left to the goal for every booth.
-- Lanes slide to re-sort whenever someone overtakes.
-- Animations: spring bars, count-up numbers, floating `+1`, pixel/binary particle bursts, a "10 PTS!" milestone every 10 points, a banner on lead changes, confetti when a booth hits the goal, binary rain in the background.
-- **Byte**, the mascot, reacts: hops on every point, cheers in the leader's color, and comments in the speech bubble.
-
-## Files
-
-```
-index.html      landing page with links to both views
-display.html    projector view
-control.html    staff control panel
-byte.html       Byte mascot preview
-js/store.js     scores, saving, tab sync, and all leaderboard math
-js/display.js   projector rendering and effects
-js/control.js   control panel
-js/fx.js        canvas particles, confetti, binary rain
-js/byte.js      Byte as a component SVG (body, headphones, eyes, mouth, sparkles)
-css/            styles
-```
-
-## Development
-
-Open the HTML files directly, or serve the folder if you prefer:
-
-```bash
-python -m http.server 8765
-```
+Coming soon.

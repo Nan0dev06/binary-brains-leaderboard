@@ -2,22 +2,23 @@
 
 ## Done
 - [x] Offline leaderboard (no internet, no install)
-- [x] Four booths with colors: Computing blue, Cybersecurity red, Data Science green, General pink
-- [x] Projector display: racing bars, ranks, share %, gap to 1st, points to goal
-- [x] Animations: spring bars, count-up, +1 chips, particle bursts, milestones, overtake banner, goal confetti, binary rain
-- [x] Staff control panel: +1 / -1 per booth, undo, goal setting, reset with typed confirmation, activity log
-- [x] Control panel and display stay in sync (BroadcastChannel + storage event + polling fallback)
-- [x] Keyboard shortcuts for a single-screen setup
-- [x] Byte recreated as a component SVG (`js/byte.js`), preview at `byte.html`
-- [x] Basic Byte reactions: blink, hop on points, cheer in leader color, glitch
+- [x] Booth colors: Computing blue, Cybersecurity red, Data Science green, General pink
+- [x] Projector display: rank, points, share %, gap to 1st, points to goal
+- [x] Staff panel: +1 / -1, undo, goal, mute, inline typed reset, activity log
+- [x] Display and panel stay in sync (BroadcastChannel + storage event + polling fallback)
+- [x] Keyboard shortcuts for single-screen setups
+- [x] Design review with the impeccable skill (PRODUCT.md, critique saved locally)
+- [x] Arcade redesign: Pixelify Sans, pixel borders, block meters, 1ST/2ND rank tiles, pixel icons, no emojis
+- [x] Chiptune sound effects (Web Audio, no files) with "click for sound" badge and shared mute
+- [x] Byte as a component SVG with blink / hop / cheer / glitch
 
-## Next: Byte
-- [ ] Get feedback on Byte's SVG look and fix proportions/details
-- [ ] Clarify "it's going to be green": does Byte turn green, glow green, or something else when a team wins?
-- [ ] More Byte animations and reactions (to be defined)
+## Next
+- [ ] Byte: wait for new reference images, then rework his SVG and animations
+- [ ] Byte: clarify "it's going to be green" (turn green, glow green, or something else when a team wins?)
+- [ ] Screenshots in README once the design is approved
 
 ## Before the event
-- [ ] Test on the actual event laptop by double-clicking `index.html` (file://), with Chrome or Edge
-- [ ] Test with the real projector in Extend mode (Win + P)
+- [ ] Test on the event laptop by double-clicking `index.html` (file://) in Chrome or Edge
+- [ ] Test with the real projector (Extend mode) and the room's speakers
 - [ ] Pick the goal number for the day
 - [ ] Reset scores after testing

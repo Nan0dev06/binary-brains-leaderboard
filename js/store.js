@@ -5,26 +5,19 @@
 (function () {
   const KEY = 'bb-leaderboard-v1';
 
-  const ICONS = {
-    computing: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"><path d="M8 6 2 12l6 6M16 6l6 6-6 6M14 4l-4 16"/></svg>',
-    cyber: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="miter"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/><path d="M9 12l2 2 4-4"/></svg>',
-    data: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
-    general: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7v.5"/></svg>',
-  };
-
   const TEAMS = [
-    { id: 'computing', name: 'Computing', color: '#4aa8ff', key: '1' },
-    { id: 'cyber', name: 'Cybersecurity', color: '#ff3b55', key: '2' },
-    { id: 'data', name: 'Data Science', color: '#3ee07f', key: '3' },
-    { id: 'general', name: 'General', color: '#ff6cc4', key: '4' },
-  ].map(t => ({ ...t, icon: ICONS[t.id] }));
+    { id: 'computing', name: 'Computing', short: 'Computing', color: '#4aa8ff', key: '1', icon: 'code' },
+    { id: 'cyber', name: 'Cybersecurity', short: 'Cyber', color: '#ff3b55', key: '2', icon: 'shield' },
+    { id: 'data', name: 'Data Science', short: 'Data', color: '#3ee07f', key: '3', icon: 'chart' },
+    { id: 'general', name: 'General', short: 'General', color: '#ff6cc4', key: '4', icon: 'info' },
+  ].map(t => ({ ...t, icon: window.ICONS[t.icon] }));
 
   const MAX_LOG = 1000;
 
   function blank(rev) {
     const scores = {};
     TEAMS.forEach(t => { scores[t.id] = 0; });
-    return { rev: rev || 0, goal: 50, scores, log: [] };
+    return { rev: rev || 0, goal: 50, muted: false, scores, log: [] };
   }
 
   function read() {
@@ -93,9 +86,16 @@
     commit(next);
   }
 
+  function setMuted(muted) {
+    const next = clone();
+    next.muted = !!muted;
+    commit(next);
+  }
+
   function reset() {
     const next = blank();
     next.goal = state.goal;
+    next.muted = state.muted;
     commit(next);
   }
 
@@ -141,6 +141,7 @@
     add,
     undo,
     setGoal,
+    setMuted,
     reset,
     standings,
   };
