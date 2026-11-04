@@ -24,7 +24,7 @@ Byte lives in `byte/`. The display loads `byte/byte-mascot.js`, a self-contained
 
 On the display he cheers on every point and glances at the lane that scored. He spins when a booth climbs a rank, catches fire every 10 points, celebrates a new leader, celebrates and dances when a booth reaches the goal, gasps at a tie, looks sad when a point is removed, and glitches on undo or reset. With no points for 90 s he opens his laptop; after 4 min he yawns and naps, and the next point wakes him.
 
-- In the staff panel, **Open Byte controls** asks for a password (set as `BYTE_PASSWORD` in `js/control.js`). Inside you can play any mode or reaction on the projector, make him say something, or turn on **Auto** so he runs his own routine. Closing the section locks it again.
+- In the staff panel, **Open Byte controls** (under the booth cards) plays any mode or reaction on the projector, and **Auto** lets him run his own routine. Making him **say** something needs a password (set as `BYTE_PASSWORD` in `js/control.js`); closing the section locks Say again.
 - `byte/index.html` shows every mode and reaction (double-click it).
 - To change his proportions or colours, run `node byte/serve.mjs` and open http://localhost:8737/designer.html. **Save** rebuilds `byte/byte-mascot.js` and `byte/byte.svg`; reload the display to see him.
 - Include the `byte/` folder when you zip a release.

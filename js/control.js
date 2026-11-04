@@ -149,7 +149,7 @@
   });
   resetForm.addEventListener('keydown', e => { if (e.key === 'Escape') closeReset(); });
 
-  // Byte controls: opening needs the password, closing locks them again.
+  // Byte controls: the section opens freely, Say needs the password, and closing locks Say again.
   // A light lock against stray clicks, not real security (it is readable in this file).
   const BYTE_PASSWORD = 'meow';
   const Mascot = customElements.get('byte-mascot');
@@ -157,29 +157,32 @@
   const byteLock = $('byte-lock');
   const bytePass = $('byte-pass');
   const bytePanel = $('byte-panel');
+  const byteSay = $('byte-say');
   const preview = $('byte-preview');
 
-  function setByteOpen(open) {
-    bytePanel.hidden = !open;
-    byteLock.hidden = true;
-    byteOpen.hidden = false;
+  function lockSay() {
+    byteLock.hidden = false;
+    byteSay.hidden = true;
     bytePass.value = '';
+    $('byte-text').value = '';
     $('byte-lock-msg').textContent = '';
-    byteOpen.setAttribute('aria-expanded', open);
-    byteOpen.textContent = open ? 'Close and lock Byte controls' : 'Open Byte controls';
   }
   byteOpen.addEventListener('click', () => {
     SFX.click();
-    if (!bytePanel.hidden) { setByteOpen(false); return; }
-    byteOpen.hidden = true;
-    byteLock.hidden = false;
-    bytePass.focus();
+    const open = bytePanel.hidden;
+    bytePanel.hidden = !open;
+    byteOpen.setAttribute('aria-expanded', open);
+    byteOpen.textContent = open ? 'Close Byte controls' : 'Open Byte controls';
+    if (!open) lockSay();
   });
-  $('byte-lock-cancel').addEventListener('click', () => setByteOpen(false));
-  byteLock.addEventListener('keydown', e => { if (e.key === 'Escape') setByteOpen(false); });
   byteLock.addEventListener('submit', e => {
     e.preventDefault();
-    if (bytePass.value.trim().toLowerCase() === BYTE_PASSWORD) { setByteOpen(true); return; }
+    if (bytePass.value.trim().toLowerCase() === BYTE_PASSWORD) {
+      byteLock.hidden = true;
+      byteSay.hidden = false;
+      $('byte-text').focus();
+      return;
+    }
     bytePass.value = '';
     $('byte-lock-msg').textContent = 'Wrong password.';
     bytePass.focus();
@@ -200,7 +203,7 @@
     byteButtons($('byte-modes'), Mascot.STATES, name => { ByteLink.send('state', { name }); preview.state = name; });
     byteButtons($('byte-reactions'), Mascot.REACTIONS, name => { ByteLink.send('react', { name }); preview.react(name); });
   }
-  $('byte-say').addEventListener('submit', e => {
+  byteSay.addEventListener('submit', e => {
     e.preventDefault();
     const text = $('byte-text').value.trim();
     if (!text) return;
