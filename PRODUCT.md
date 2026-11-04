@@ -12,17 +12,18 @@ product
 A live, offline leaderboard for the Binary Brains (USAL Computer Science Club) booth event. Four booths (Computing, Cybersecurity, Data Science, General) compete; every finished challenge adds a point and the projector shows the race. Success: students feel the competition from across the room and want to go earn points, and the operator never loses or miscounts a score.
 
 ## Brand Personality
-Arcade, competitive, clever. It should feel like a retro arcade scoreboard built by a CS club: pixel energy that matches Byte the mascot, grounded in the club's dark-green-and-binary logo. Big, punchy moments when someone scores or takes the lead, calm and readable in between.
+Hacker terminal: techy, competitive, clever. It should feel like the club's logo come to life: near-black green, bright green, binary digits and glowing circuit energy, crisp and controlled. Big moments when someone scores or takes the lead, calm and readable in between. (A pixel/arcade direction was tried and rejected; it lives on the `pixel-design` branch.)
 
 ## Anti-references
 - Generic SaaS dashboards: rounded cards, gray body text, corporate charts.
 - Over-the-top neon: glow on everything, which washes out on a projector.
+- Chunky pixel/arcade styling (tried and rejected by the club).
 - Cluttered screens: many effects and numbers fighting for attention.
 
 ## Design Principles
 1. **Readable from the back of the room.** Rank, name and score win every size and contrast decision; secondary stats stay secondary.
 2. **Celebrate the moment, then get out of the way.** Motion fires on scoring events and lead changes; idle state is quiet.
-3. **One arcade language.** Pixel geometry (stepped corners, block segments, pixel type and icons) everywhere, so Byte, bars and UI look like one game.
+3. **One terminal language.** Dark green surfaces, monospace accents, binary motifs and line icons everywhere, so it reads as the Binary Brains logo in motion.
 4. **Never lose a point.** The operator panel favors clarity, undo and confirmation over flair.
 
 ## Accessibility & Inclusion

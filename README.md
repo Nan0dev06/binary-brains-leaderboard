@@ -1,6 +1,6 @@
 # Binary Brains Booth Leaderboard
 
-Arcade-style live leaderboard for the Binary Brains (USAL Computer Science Club) booth event.
+Live leaderboard for the Binary Brains (USAL Computer Science Club) booth event, styled after the club logo.
 Four booths race (Computing, Cybersecurity, Data Science, General), staff add points, and the projector shows it with animations, chiptune sounds and Byte the mascot.
 
 Runs 100% offline: plain HTML/CSS/JS, no install, no internet.
@@ -20,8 +20,12 @@ Scores are saved in the browser and survive restarts. Only **Reset all scores** 
 
 ## Credits
 
-- Font: [Pixelify Sans](https://fonts.google.com/specimen/Pixelify+Sans) (SIL Open Font License, see `assets/fonts/OFL-LICENSE.txt`)
-- Icons: [Pixelarticons](https://pixelarticons.com) (MIT)
+- Icons: [Lucide](https://lucide.dev) (ISC)
+
+## Design options
+
+Two looks were made: **terminal** (this branch, recommended) and **pixel / arcade** (the `pixel-design` branch).
+Side-by-side screenshots for feedback: `screenshots/Binary-Brains-design-options.pdf`.
 
 ## Screenshots
 

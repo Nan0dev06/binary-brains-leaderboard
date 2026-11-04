@@ -8,13 +8,16 @@
 - [x] Display and panel stay in sync (BroadcastChannel + storage event + polling fallback)
 - [x] Keyboard shortcuts for single-screen setups
 - [x] Design review with the impeccable skill (PRODUCT.md, critique saved locally)
-- [x] Arcade redesign: Pixelify Sans, pixel borders, block meters, 1ST/2ND rank tiles, pixel icons, no emojis
+- [x] Tried an arcade/pixel redesign; rejected, kept on the `pixel-design` branch with screenshots
+- [x] Back to the first (terminal) design with Lucide line icons, no emojis
 - [x] Chiptune sound effects (Web Audio, no files) with "click for sound" badge and shared mute
+- [x] Side-by-side design comparison PDF in `screenshots/`
 - [x] Byte as a component SVG with blink / hop / cheer / glitch
 
 ## Next
 - [ ] Byte: wait for new reference images, then rework his SVG and animations
 - [ ] Byte: clarify "it's going to be green" (turn green, glow green, or something else when a team wins?)
+- [ ] Collect opinions on the comparison PDF and pick a design
 - [ ] Screenshots in README once the design is approved
 
 ## Before the event

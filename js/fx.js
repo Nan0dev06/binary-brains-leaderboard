@@ -26,13 +26,13 @@
     let last = 0;
     (function frame(t) {
       requestAnimationFrame(frame);
-      if (t - last < 80) return; // ~12fps keeps it calm and cheap
+      if (t - last < 60) return; // ~16fps keeps it calm and cheap
       last = t;
       ctx.fillStyle = 'rgba(6, 17, 11, 0.16)';
       ctx.fillRect(0, 0, innerWidth, innerHeight);
       for (let i = 0; i < cols; i++) {
         const y = drops[i] * size;
-        ctx.fillStyle = Math.random() < 0.03 ? 'rgba(180, 255, 210, 0.4)' : 'rgba(76, 214, 128, 0.22)';
+        ctx.fillStyle = Math.random() < 0.04 ? 'rgba(180, 255, 210, 0.55)' : 'rgba(76, 214, 128, 0.32)';
         ctx.fillText(Math.random() < 0.5 ? '0' : '1', i * size, y);
         drops[i] += 0.5 + (i % 3) * 0.15;
         if (y > innerHeight && Math.random() > 0.975) drops[i] = 0;
@@ -105,7 +105,7 @@
     kick();
   }
 
-  // Square pixel confetti raining across the whole screen.
+  // Confetti raining across the whole screen.
   function confetti(colors, count = 220) {
     const unit = innerHeight / 1080;
     for (let i = 0; i < count; i++) {
@@ -115,13 +115,11 @@
         vx: (Math.random() - 0.5) * 4 * unit, vy: (2 + Math.random() * 4) * unit,
         g: 0.06 * unit, drag: 0.995,
         life: 1, decay: 0.003 + Math.random() * 0.003,
-        rot: 0, vr: 0,
-        w: 0, h: 0, size: 8,
+        rot: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3,
+        w: (8 + Math.random() * 8) * unit, h: (4 + Math.random() * 6) * unit, size: 8,
         color: colors[i % colors.length],
         ch: Math.random() < 0.12 ? (Math.random() < 0.5 ? '0' : '1') : null,
       });
-      const p = parts[parts.length - 1];
-      p.w = p.h = (8 + Math.random() * 8) * unit;
     }
     kick();
   }

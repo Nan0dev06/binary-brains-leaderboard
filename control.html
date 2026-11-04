@@ -10,56 +10,55 @@
 <body class="control">
   <header class="bar">
     <img class="logo" src="assets/logo.jpg" alt="">
-    <div class="bar-title">
-      <h1 class="brand-title">B<span class="one">1</span>nary Bra<span class="one">1</span>ns <span class="role">Staff panel</span></h1>
-      <p class="pixel muted">Total <b id="total">0</b> pts &middot; Goal <b id="goal-label">50</b></p>
+    <div>
+      <h1 class="brand-title">B<span class="one">1</span>NARY BRA<span class="one">1</span>NS <span class="muted">&middot; staff panel</span></h1>
+      <p class="muted mono small">Total <b id="total">0</b> pts &middot; goal <b id="goal-label">50</b></p>
     </div>
-    <button class="btn" id="sound" type="button"><span class="icon-svg" id="sound-icon"></span><span id="sound-label">Sound on</span></button>
-    <a class="btn" href="display.html" target="_blank"><span class="icon-svg" data-icon="external"></span>Open projector display</a>
+    <button class="btn link" id="sound" type="button"><span class="icon-svg" id="sound-icon"></span><span id="sound-label">Sound on</span></button>
+    <a class="btn link" href="display.html" target="_blank">Open projector display <span class="icon-svg" data-icon="external"></span></a>
   </header>
 
   <main>
-    <section class="teams" id="teams" aria-label="Booths"></section>
+    <section class="teams" id="teams"></section>
 
     <section class="tools">
-      <div class="tool px-border">
-        <h2 class="pixel">Undo</h2>
-        <button class="btn wide" id="undo" type="button"><span class="icon-svg" data-icon="undo"></span>Undo last action</button>
-        <p class="hint" id="undo-hint">Nothing to undo yet.</p>
+      <div class="card">
+        <h2 class="mono">Undo</h2>
+        <button class="btn wide" id="undo" type="button"><span class="icon-svg" data-icon="undo"></span> Undo last action</button>
+        <p class="muted small" id="undo-hint">Nothing to undo yet.</p>
       </div>
 
-      <div class="tool px-border">
-        <h2 class="pixel"><label for="goal">Goal</label></h2>
+      <div class="card">
+        <h2 class="mono">Goal</h2>
         <form id="goal-form" class="row">
-          <input id="goal" type="number" min="1" step="1" inputmode="numeric">
+          <input id="goal" type="number" min="1" step="1" inputmode="numeric" aria-label="Goal points">
           <button class="btn" type="submit">Set</button>
         </form>
-        <p class="hint">Meters fill up toward this number.</p>
+        <p class="muted small">Bars fill up toward this number.</p>
       </div>
 
-      <div class="tool px-border">
-        <h2 class="pixel">Activity</h2>
+      <div class="card">
+        <h2 class="mono">Activity</h2>
         <ul id="log" class="log"></ul>
       </div>
 
-      <div class="tool px-border">
-        <h2 class="pixel">Reset</h2>
+      <div class="card danger-zone">
+        <h2 class="mono">Reset</h2>
         <button class="btn wide danger" id="reset" type="button">Reset all scores</button>
         <form class="confirm" id="reset-form" hidden>
-          <label class="hint" for="reset-text">This wipes every score and the activity log. Type <b>RESET</b> to confirm.</label>
+          <label class="muted small" for="reset-text">This wipes every score and the activity log. Type <b>RESET</b> to confirm.</label>
           <input id="reset-text" type="text" autocomplete="off" spellcheck="false">
           <div class="row">
             <button class="btn danger" type="submit" id="reset-confirm" disabled>Confirm reset</button>
             <button class="btn" type="button" id="reset-cancel">Cancel</button>
           </div>
         </form>
+        <p class="muted small">Keys: 1-4 add a point, Shift+1-4 remove, Ctrl+Z undo, M mute.</p>
       </div>
-
-      <p class="keys hint"><kbd>1</kbd>-<kbd>4</kbd> add a point &middot; <kbd>Shift</kbd>+number remove &middot; <kbd>Ctrl</kbd>+<kbd>Z</kbd> undo &middot; <kbd>M</kbd> mute</p>
     </section>
   </main>
 
-  <div class="toast px-border pixel" id="toast" role="status"></div>
+  <div class="toast" id="toast"></div>
 
   <script src="js/icons.js"></script>
   <script src="js/store.js"></script>
