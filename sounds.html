@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sound Test</title>
+  <link rel="stylesheet" href="css/base.css">
+  <style>
+    body { min-height: 100vh; padding: 40px 16px; }
+    main { max-width: 640px; margin: 0 auto; }
+    h1 { font-size: 26px; margin-bottom: 8px; }
+    p { line-height: 1.5; margin-bottom: 24px; }
+    ul { list-style: none; display: grid; gap: 10px; }
+    li { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 12px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+    li b { display: block; font-size: 16px; }
+    li span { font-size: 13px; }
+    .btn { padding: 10px 18px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 class="brand-title">Sound test</h1>
+    <p class="muted">Click any button to hear the sound for that moment. Sounds: CC0 retro collection by Juhani Junkala.</p>
+    <ul id="list"></ul>
+  </main>
+  <script src="js/sound.js"></script>
+  <script>
+    const EVENTS = [
+      ['point', 'A point is added'],
+      ['milestone', 'Every 10 points'],
+      ['minus', 'A point is removed'],
+      ['undo', 'Undo'],
+      ['rank', 'A booth climbs a rank'],
+      ['lead', 'New leader'],
+      ['tie', 'Tie for 1st'],
+      ['goal', 'A booth reaches the goal'],
+      ['reset', 'Scores reset'],
+      ['confirm', 'Goal changed'],
+      ['click', 'Staff panel button'],
+      ['start', 'Sound switched on'],
+    ];
+    document.getElementById('list').innerHTML = EVENTS.map(([key, label]) =>
+      `<li><div><b>${label}</b><span class="muted mono">${key}</span></div><button class="btn" type="button" data-sfx="${key}">Play</button></li>`).join('');
+    document.addEventListener('click', e => {
+      const key = e.target.dataset && e.target.dataset.sfx;
+      if (key) { SFX.unlock(); setTimeout(() => SFX[key](), 30); }
+    });
+  </script>
+</body>
+</html>

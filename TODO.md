@@ -12,16 +12,17 @@
 - [x] Back to the first (terminal) design with Lucide line icons, no emojis
 - [x] Chiptune sound effects (Web Audio, no files) with "click for sound" badge and shared mute
 - [x] Side-by-side design comparison PDF in `screenshots/`
+- [x] Real CC0 arcade sound files (Juhani Junkala collection) with synth fallback, test page `sounds.html`
 - [x] Byte as a component SVG with blink / hop / cheer / glitch
 
 ## Next
-- [ ] Byte: wait for new reference images, then rework his SVG and animations
-- [ ] Byte: clarify "it's going to be green" (turn green, glow green, or something else when a team wins?)
+- [ ] Byte: being designed in a separate session; merge his new SVG here when ready
 - [ ] Collect opinions on the comparison PDF and pick a design
 - [ ] Screenshots in README once the design is approved
 
 ## Before the event
 - [ ] Test on the event laptop by double-clicking `index.html` (file://) in Chrome or Edge
 - [ ] Test with the real projector (Extend mode) and the room's speakers
+- [ ] Listen to every sound on `sounds.html` and swap any that don't fit (names in `js/sound.js`)
 - [ ] Pick the goal number for the day
 - [ ] Reset scores after testing

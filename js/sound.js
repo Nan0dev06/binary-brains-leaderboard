@@ -1,6 +1,8 @@
-// Chiptune sound effects synthesized with Web Audio: no audio files, works offline.
+// Arcade sound effects. Each event plays CC0 retro samples from assets/sounds
+// (Juhani Junkala's 512-sound collection) and falls back to a synthesized chiptune
+// version if a file can't play. Everything is local, so it works offline.
 // Browsers only allow sound after a click or key press on the page, so the first
-// interaction "unlocks" audio. All melodies here are original.
+// interaction "unlocks" audio.
 (function () {
   let ctx = null;
   let master = null;
@@ -73,7 +75,7 @@
     notes.forEach((n, i) => { if (n) tone(type, midi(n), i * step, step * len * 1.6, vol); });
   }
 
-  const SFX = {
+  const SYNTH = {
     // a point is scored: two-note coin chime
     point() { tone('square', midi(83), 0, 0.07, 0.4); tone('square', midi(88), 0.07, 0.3, 0.4); },
     // every 10 points: quick rising run
@@ -107,6 +109,52 @@
     // sound just got switched on
     start() { seq([84, 91], 0.07, 'square', 0.35); },
   };
+
+  // Event -> samples as [file in assets/sounds, delay in seconds]. Swap names here to change a sound.
+  const SAMPLES = {
+    point: [['sfx_coin_double1', 0]],
+    milestone: [['sfx_sounds_powerup2', 0]],
+    minus: [['sfx_sounds_damage1', 0]],
+    undo: [['sfx_sounds_negative2', 0]],
+    rank: [['sfx_movement_portal5', 0]],
+    lead: [['sfx_sounds_fanfare1', 0], ['sfx_coin_cluster3', 0.35]],
+    goal: [['sfx_sounds_fanfare1', 0], ['sfx_sounds_fanfare3', 0.55], ['sfx_coin_cluster8', 0.85]],
+    tie: [['sfx_alarm_loop5', 0]],
+    reset: [['sfx_sounds_falling4', 0]],
+    confirm: [['sfx_menu_select1', 0]],
+    click: [['sfx_menu_move1', 0]],
+    start: [['sfx_sounds_powerup5', 0]],
+  };
+  const VOLUME = { click: 0.5 };
+
+  // <audio> elements (not fetch) so the files also load when index.html is opened by double-click.
+  const cache = {};
+  function sample(file) {
+    if (!cache[file]) {
+      cache[file] = new Audio(`assets/sounds/${file}.wav`);
+      cache[file].preload = 'auto';
+    }
+    return cache[file];
+  }
+  Object.values(SAMPLES).forEach(steps => steps.forEach(([file]) => sample(file)));
+
+  function play(name) {
+    if (!isUnlocked() || muted) return;
+    let failed = false;
+    SAMPLES[name].forEach(([file, delay]) => setTimeout(() => {
+      if (failed) return;
+      const a = sample(file).cloneNode(); // clone so rapid repeats overlap instead of cutting off
+      a.volume = VOLUME[name] || 0.85;
+      a.play().catch(() => {
+        if (failed) return;
+        failed = true;
+        SYNTH[name]();
+      });
+    }, delay * 1000));
+  }
+
+  const SFX = {};
+  Object.keys(SYNTH).forEach(name => { SFX[name] = () => play(name); });
 
   window.SFX = {
     ...SFX,

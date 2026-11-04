@@ -10,7 +10,7 @@ Runs 100% offline: plain HTML/CSS/JS, no install, no internet.
 1. Double-click `index.html` (Chrome or Edge).
 2. Open **Projector display** and **Staff control panel** in the same browser.
 3. `Win + P` → **Extend**, drag the display onto the projector, press `F` for fullscreen.
-4. Click the display once to turn on sound.
+4. Click the display once to turn on sound (`sounds.html` plays every sound for testing).
 
 Scores are saved in the browser and survive restarts. Only **Reset all scores** (type `RESET`) clears them.
 
@@ -21,6 +21,7 @@ Scores are saved in the browser and survive restarts. Only **Reset all scores** 
 ## Credits
 
 - Icons: [Lucide](https://lucide.dev) (ISC)
+- Sounds: [The Essential Retro Video Game Sound Effects Collection](https://opengameart.org/content/512-sound-effects-8-bit-style) by Juhani Junkala (CC0), see `assets/sounds/LICENSE.txt`. Try them all on `sounds.html`.
 
 ## Design options
 
