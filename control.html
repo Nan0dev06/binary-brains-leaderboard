@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff Control Panel</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/control.css">
+</head>
+<body class="control">
+  <header class="bar">
+    <img class="logo" src="assets/logo.jpg" alt="">
+    <div>
+      <h1 class="brand-title">B<span class="one">1</span>NARY BRA<span class="one">1</span>NS <span class="muted">&middot; staff panel</span></h1>
+      <p class="muted mono small">Total <b id="total">0</b> pts &middot; goal <b id="goal-label">50</b></p>
+    </div>
+    <a class="btn link" href="display.html" target="_blank">Open projector display &#8599;</a>
+  </header>
+
+  <main>
+    <section class="teams" id="teams"></section>
+
+    <section class="tools">
+      <div class="card">
+        <h2 class="mono">Undo</h2>
+        <button class="btn wide" id="undo">&#8630; Undo last action</button>
+        <p class="muted small" id="undo-hint">Nothing to undo yet.</p>
+      </div>
+
+      <div class="card">
+        <h2 class="mono">Goal</h2>
+        <form id="goal-form" class="row">
+          <input id="goal" type="number" min="1" step="1" inputmode="numeric" aria-label="Goal points">
+          <button class="btn" type="submit">Set</button>
+        </form>
+        <p class="muted small">Bars fill up toward this number.</p>
+      </div>
+
+      <div class="card">
+        <h2 class="mono">Activity</h2>
+        <ul id="log" class="log"></ul>
+      </div>
+
+      <div class="card danger-zone">
+        <h2 class="mono">Reset</h2>
+        <button class="btn wide danger" id="reset">Reset all scores</button>
+        <p class="muted small">Keys: 1-4 add a point, Shift+1-4 remove, Ctrl+Z undo.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/store.js"></script>
+  <script src="js/control.js"></script>
+</body>
+</html>

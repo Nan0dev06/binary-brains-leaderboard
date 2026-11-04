@@ -1,0 +1,52 @@
+/* Shared look, pulled from the Binary Brains logo: near-black green, bright green, white.
+   Only system fonts so nothing needs the internet. */
+:root {
+  --bg: #06110b;
+  --bg-2: #0a1a12;
+  --panel: #0d2017;
+  --panel-2: #112a1e;
+  --line: rgba(76, 214, 128, .16);
+  --line-strong: rgba(76, 214, 128, .35);
+  --green: #4cd680;
+  --green-dim: #2c8f52;
+  --text: #ecfff3;
+  --muted: #86a896;
+  --danger: #ff4d5e;
+  --font-display: "Bahnschrift", "DIN Alternate", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Cascadia Mono", "Consolas", "SF Mono", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { background: var(--bg); color: var(--text); }
+
+body {
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+.muted { color: var(--muted); }
+.mono { font-family: var(--font-mono); }
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.brand-title .one { color: var(--green); }
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: var(--text);
+  background: var(--panel-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform .12s ease, background .15s ease, border-color .15s ease;
+}
+.btn:hover { background: #163626; border-color: var(--green); }
+.btn:active { transform: scale(.96); }
+.btn:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }

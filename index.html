@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Binary Brains Leaderboard</title>
+  <link rel="stylesheet" href="css/base.css">
+  <style>
+    body { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; text-align: center; }
+    img { width: 180px; border-radius: 12px; border: 1px solid var(--line); }
+    h1 { font-size: 28px; margin: 18px 0 6px; }
+    .links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin: 28px 0 18px; }
+    .links a { padding: 18px 26px; font-size: 18px; text-decoration: none; display: inline-block; }
+    .links a.primary { background: var(--green); color: #06110b; border-color: var(--green); }
+    p { max-width: 520px; margin: 0 auto; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div>
+    <img src="assets/logo.jpg" alt="Binary Brains logo">
+    <h1 class="brand-title">B<span class="one">1</span>NARY BRA<span class="one">1</span>NS</h1>
+    <p class="muted">Booth challenge leaderboard &middot; runs 100% offline on this laptop</p>
+    <div class="links">
+      <a class="btn primary" href="display.html" target="_blank">Projector display</a>
+      <a class="btn" href="control.html" target="_blank">Staff control panel</a>
+    </div>
+    <p class="muted">Open both in the same browser. Drag the display window onto the projector and press F for fullscreen.
+      Points added in the control panel show up on the display instantly.</p>
+  </div>
+</body>
+</html>
