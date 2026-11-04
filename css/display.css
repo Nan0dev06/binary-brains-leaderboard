@@ -220,6 +220,7 @@
   background: rgba(10, 26, 18, .7);
 }
 .byte-holder { width: 70%; margin: 0 auto; }
+.byte-holder byte-mascot { display: block; width: 100%; }
 .bubble {
   position: relative;
   margin-bottom: 3.6vh;
@@ -361,5 +362,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fill, .fill-bits, .byte-rig, .byte-cup-inner { animation: none !important; }
+  .fill, .fill-bits { animation: none !important; }
 }

@@ -13,7 +13,8 @@
   const soundIcon = $('sound-icon');
   $('coin-icon').innerHTML = ICONS.volume;
 
-  const byte = Byte.mount($('byte'));
+  const byte = $('byte');  // <byte-mascot>, see byte/byte-mascot.js
+  if (!byte.react) Object.assign(byte, { react: () => Promise.resolve(), lookAt() {} });  // byte/ missing: keep scoring without him
   FX.startRain($('rain'));
 
   const CROWN = '<svg viewBox="0 0 10 6" fill="currentColor" shape-rendering="crispEdges"><path d="M0 0h2v2h1V1h1V0h2v1h1v1h1V0h2v6H0z"/></svg>';
@@ -117,7 +118,7 @@
       const p = barEnd(L, r);
       FX.burst(p.x, p.y, r.team.color, milestone ? 80 : 26 + Math.min(delta, 5) * 8);
     }, 250);
-    byte.bop();
+    byte.lookAt(L.el);  // glance at the lane that scored
     return milestone;
   }
 
@@ -145,7 +146,27 @@
     if (Date.now() < holdUntil) return;
     tipIndex = (tipIndex + 1) % TIPS.length;
     say(TIPS[tipIndex], 0);
+    if (tipIndex % 2 === 0 && byte.state === 'idle') byte.react('wave');  // catch the eye of people walking by
   }, 12000);
+
+  // ---------- Byte between events: idle, then his laptop, then a nap ----------
+  const LAPTOP_AFTER = 90 * 1000;
+  const NAP_AFTER = 4 * 60 * 1000;
+  let lastScore = Date.now();
+
+  function wakeByte() {
+    lastScore = Date.now();
+    if (byte.state === 'sleep') { byte.state = 'idle'; byte.react('wake'); }
+    else byte.state = 'idle';
+  }
+  setInterval(() => {
+    const quiet = Date.now() - lastScore;
+    if (quiet > NAP_AFTER && byte.state === 'laptop') {
+      byte.react('yawn').then(() => { if (Date.now() - lastScore > NAP_AFTER) byte.state = 'sleep'; });
+    } else if (quiet > LAPTOP_AFTER && byte.state === 'idle') {
+      byte.state = 'laptop';
+    }
+  }, 5000);
 
   function banner(kicker, text, color) {
     bannerEl.style.setProperty('--c', color);
@@ -233,8 +254,11 @@
   });
   coinEl.addEventListener('click', () => SFX.unlock());
 
+  // Byte plays one reaction per update, picked by how big the moment is.
   function celebrate(s, p, undid, events) {
-    if (s.total === 0 && p.total > 0) { say('Scores reset. Fresh start, everyone!'); byte.glitch(); SFX.reset(); return; }
+    const reset = s.total === 0 && p.total > 0;
+    if (reset || events.points || events.minus) wakeByte();
+    if (reset) { say('Scores reset. Fresh start, everyone!'); byte.react('glitch'); SFX.reset(); return; }
 
     if (events.points) SFX.point();
     if (events.minus) undid ? SFX.undo() : SFX.minus();
@@ -253,21 +277,30 @@
       banner('GOAL REACHED', t.name, t.color);
       setTimeout(SFX.goal, 220);
       FX.confetti([t.color, '#ffffff', '#4cd680', ...BB.TEAMS.map(x => x.color)]);
-      byte.cheer(t.color, 4000);
+      byte.react('celebrate');
+      byte.react('dance');
       say(`${t.name} reached ${s.goal} points! Incredible!`, 8000);
     } else if (newLeader) {
       const t = s.leader.team;
       banner(p.total === 0 ? 'FIRST POINT' : 'NEW LEADER', t.name, t.color);
       setTimeout(SFX.lead, 220);
-      byte.cheer(t.color);
-      byte.glitch();
+      byte.react('celebrate');
       say(p.total === 0 ? `${t.name} is on the board!` : `${t.name} is now #1!`);
     } else if (tiedTop) {
-      byte.glitch();
+      byte.react('shock');
       say('It is a tie at the top! Who breaks it?');
       setTimeout(SFX.tie, 200);
+    } else if (undid) {
+      byte.react('glitch');
     } else if (events.climbed) {
       setTimeout(SFX.rank, 160);
+      byte.react('spin');
+    } else if (events.milestone) {
+      byte.react('hype');
+    } else if (events.points) {
+      byte.react('cheer');
+    } else if (events.minus) {
+      byte.react('sad');
     }
   }
 

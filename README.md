@@ -18,6 +18,16 @@ Scores are saved in the browser and survive restarts. Only **Reset all scores** 
 
 `1`-`4` add a point · `Shift`+number remove one · `Ctrl+Z` undo · `M` mute · `F` fullscreen (display)
 
+## Byte
+
+Byte lives in `byte/`. The display loads `byte/byte-mascot.js`, a self-contained `<byte-mascot>` element that works offline. If that file is missing, the board still runs without him.
+
+On the display he cheers on every point and glances at the lane that scored. He spins when a booth climbs a rank, catches fire every 10 points, celebrates a new leader, celebrates and dances when a booth reaches the goal, gasps at a tie, looks sad when a point is removed, and glitches on undo or reset. With no points for 90 s he opens his laptop; after 4 min he yawns and naps, and the next point wakes him.
+
+- `byte/index.html` shows every mode and reaction (double-click it).
+- To change his proportions or colours, run `node byte/serve.mjs` and open http://localhost:8737/designer.html. **Save** rebuilds `byte/byte-mascot.js` and `byte/byte.svg`; reload the display to see him.
+- Include the `byte/` folder when you zip a release.
+
 ## Credits
 
 - Icons: [Lucide](https://lucide.dev) (ISC)

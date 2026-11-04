@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Byte Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="byte-mascot.js"></script>
+<style>
+  :root {
+    --bg: #031B0E; --panel: #06261A; --line: #134A2E; --green: #56B776;
+    --mint: #A6FFC4; --ink: #E4FBEC; --muted: #86AE95; --pixel: "Press Start 2P", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink); font: 14px/1.6 "JetBrains Mono", ui-monospace, monospace; }
+  body::after { content: ""; position: fixed; inset: 0; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(0,0,0,.16) 0 2px, transparent 2px 4px); }
+  header { max-width: 1240px; margin: 0 auto; padding: 28px 20px 8px; display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+  h1 { font: 400 34px/1 var(--pixel); font-size: clamp(24px, 4vw, 34px); margin: 0; color: var(--green); text-shadow: 4px 4px 0 #0B3B22; }
+  header p { margin: 0; color: var(--muted); flex: 1; min-width: 240px; }
+  a { color: var(--mint); }
+  main { max-width: 1240px; margin: 0 auto; padding: 12px 20px 48px; display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 22px; align-items: start; }
+  .previews { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; }
+  .card { background: var(--panel); border: 4px solid var(--line); position: relative; }
+  .card > h2 { position: absolute; top: 12px; left: 14px; margin: 0; z-index: 1; }
+  h2 { font: 400 11px/1.4 var(--pixel); color: var(--mint); margin: 0 0 12px; letter-spacing: .04em; }
+  h2 small { font: 400 12px "JetBrains Mono", monospace; color: var(--muted); letter-spacing: 0; margin-left: 6px; }
+  #pose { display: block; width: 100%; aspect-ratio: 480 / 540; }
+  .gridtoggle { position: absolute; top: 8px; right: 12px; display: flex; gap: 8px; align-items: center; color: var(--muted); font-size: 12px; cursor: pointer; z-index: 1; }
+  .live { display: flex; flex-direction: column; }
+  .live .stage { flex: 1; min-height: 360px; display: flex; align-items: flex-end; justify-content: center; padding: 48px 10px 14px; overflow: hidden;
+    border-bottom: 4px solid var(--line); background: linear-gradient(to top, #0B3B22 0 14px, transparent 14px); }
+  byte-mascot { width: min(100%, 300px); filter: drop-shadow(0 0 18px rgba(86,183,118,.25)); }
+  .live .buttons { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; }
+  button { font: 400 11px/1.3 var(--pixel); color: var(--ink); background: #0B3B22; border: 0; padding: 10px 10px; cursor: pointer;
+    box-shadow: inset 0 0 0 2px var(--line), 0 4px 0 #021209; }
+  button:hover { background: #10502E; }
+  button:active { transform: translateY(3px); box-shadow: inset 0 0 0 2px var(--line), 0 1px 0 #021209; }
+  button:focus-visible, input:focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; }
+  .panel { padding: 18px; display: flex; flex-direction: column; gap: 22px; }
+  .presets { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .control { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: center; margin-bottom: 12px; }
+  .control label { color: var(--ink); }
+  .control label span { color: var(--muted); font-size: 12px; margin-left: 6px; }
+  .control output { font: 400 11px var(--pixel); color: var(--mint); min-width: 3ch; text-align: right; }
+  input[type=range] { grid-column: 1 / -1; width: 100%; appearance: none; height: 22px; background: transparent; cursor: pointer; }
+  input[type=range]::-webkit-slider-runnable-track { height: 8px; background: #0B3B22; box-shadow: inset 0 0 0 2px var(--line); }
+  input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; margin-top: -5px; background: var(--mint); box-shadow: 0 0 0 3px var(--bg); }
+  input[type=range]::-moz-range-track { height: 8px; background: #0B3B22; }
+  input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 0; background: var(--mint); }
+  .colors { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .colors label { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  input[type=color] { width: 40px; height: 32px; padding: 0; border: 0; background: none; cursor: pointer; flex: none; }
+  input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+  input[type=color]::-webkit-color-swatch { border: 3px solid var(--line); }
+  .colors code { display: block; color: var(--muted); font-size: 12px; }
+  .actions { display: flex; gap: 8px; }
+  .actions .save { flex: 1; background: var(--green); color: var(--bg); box-shadow: inset 0 0 0 2px var(--mint), 0 4px 0 #021209; }
+  .actions .save:hover { background: #6BCB89; }
+  #status { min-height: 1.6em; margin: 0; color: var(--muted); }
+  #status.ok { color: var(--mint); }
+  #status.err { color: #FF8FAB; }
+  @media (max-width: 1080px) { main { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .previews { grid-template-columns: 1fr; } .presets, .colors { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>BYTE DESIGNER</h1>
+  <p>Stretch Byte, pick his colours, then save. Saving rebuilds <code>byte.svg</code> and the animated <code>byte-mascot.js</code>. <a href="index.html">Open the playground</a></p>
+</header>
+
+<main>
+  <div class="previews">
+    <section class="card">
+      <h2>POSE</h2>
+      <label class="gridtoggle"><input type="checkbox" id="grid" checked> pixel grid</label>
+      <svg id="pose" viewBox="-60 -130 480 540" role="img" aria-label="Byte's current proportions">
+        <defs><pattern id="px" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M10 0H0V10" fill="none" stroke="#A6FFC4" stroke-opacity=".09" stroke-width="1"/></pattern></defs>
+        <g id="art"></g>
+        <rect id="gridlayer" x="-60" y="-130" width="480" height="540" fill="url(#px)" pointer-events="none"/>
+      </svg>
+    </section>
+    <section class="card live">
+      <h2>IN MOTION</h2>
+      <div class="stage"><byte-mascot id="live" state="idle"></byte-mascot></div>
+      <div class="buttons">
+        <div class="row" id="modes"></div>
+        <div class="row" id="reactions"></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="card panel" aria-label="Design controls">
+    <div>
+      <h2>START FROM</h2>
+      <div class="presets" id="presets"></div>
+    </div>
+    <div id="sliders"></div>
+    <div>
+      <h2>COLOURS <small>highlights and shadows follow</small></h2>
+      <div class="colors" id="colors"></div>
+    </div>
+    <div>
+      <div class="actions">
+        <button id="revert" type="button">UNDO TO SAVED</button>
+        <button id="save" class="save" type="button">SAVE DESIGN</button>
+      </div>
+      <p id="status" role="status"></p>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+  import { buildByte, normalize, DEFAULT_DESIGN, LIMITS } from './byte-art.mjs';
+
+  const GROUPS = [
+    ['HORNS', [['hornHeight', 'Height'], ['hornWidth', 'Width'], ['hornLean', 'Lean', '0 = upright']]],
+    ['BODY', [['headWidth', 'Head width'], ['bodyHeight', 'Body height'], ['flare', 'Hip flare'], ['legLength', 'Legs']]],
+  ];
+  const COLORS = [['body', 'Body'], ['outline', 'Outline & eyes'], ['phones', 'Headphones'], ['lights', 'Lights']];
+  const PRESETS = {
+    'Original': DEFAULT_DESIGN,
+    'Like the sketch': { hornHeight: 11, hornWidth: 7, hornLean: 2, headWidth: 28, bodyHeight: 19, flare: 2, legLength: 5 },
+    'Chunky': { hornHeight: 8, hornWidth: 8, hornLean: 3, headWidth: 32, bodyHeight: 17, flare: 2, legLength: 4 },
+    'Lanky': { hornHeight: 15, hornWidth: 6, hornLean: 5, headWidth: 24, bodyHeight: 22, flare: 1, legLength: 8 },
+  };
+
+  const $ = id => document.getElementById(id);
+  const live = $('live'), status = $('status'), inputs = {}, outputs = {};
+  let design = normalize(DEFAULT_DESIGN), saved = design, liveTimer = 0;
+
+  for (const [title, controls] of GROUPS) {
+    const box = document.createElement('div');
+    box.innerHTML = `<h2>${title}</h2>`;
+    for (const [k, label, hint] of controls) {
+      const [min, max, step] = LIMITS[k], row = document.createElement('div');
+      row.className = 'control';
+      row.innerHTML = `<label for="${k}">${label}${hint ? `<span>${hint}</span>` : ''}</label><output for="${k}"></output>`
+        + `<input type="range" id="${k}" min="${min}" max="${max}" step="${step}">`;
+      inputs[k] = row.querySelector('input');
+      outputs[k] = row.querySelector('output');
+      inputs[k].oninput = () => update({ [k]: Number(inputs[k].value) });
+      box.append(row);
+    }
+    $('sliders').append(box);
+  }
+
+  for (const [k, label] of COLORS) {
+    const row = document.createElement('label');
+    row.innerHTML = `<input type="color" id="c-${k}"><span>${label}<code></code></span>`;
+    inputs[`c-${k}`] = row.querySelector('input');
+    outputs[`c-${k}`] = row.querySelector('code');
+    inputs[`c-${k}`].oninput = e => update({ colors: { ...design.colors, [k]: e.target.value } });
+    $('colors').append(row);
+  }
+
+  for (const [name, preset] of Object.entries(PRESETS)) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = name.toUpperCase();
+    b.onclick = () => update({ ...preset, colors: design.colors });
+    $('presets').append(b);
+  }
+
+  for (const m of ['idle', 'music', 'laptop', 'sleep']) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = m.toUpperCase();
+    b.onclick = () => { live.state = m; };
+    $('modes').append(b);
+  }
+  for (const r of ['celebrate', 'cheer', 'wave', 'dance', 'shock', 'sad', 'spin', 'yawn']) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = r.toUpperCase();
+    b.onclick = () => live.react(r);
+    $('reactions').append(b);
+  }
+
+  function update(change) {
+    design = normalize({ ...design, ...change });
+    render();
+  }
+
+  function render() {
+    $('art').innerHTML = buildByte(design, { still: true }).markup;
+    clearTimeout(liveTimer);
+    liveTimer = setTimeout(() => live.setArt(buildByte(design)), 120);  // let a slider drag settle before restarting the animation
+    inputs.hornWidth.max = Math.min(LIMITS.hornWidth[1], design.headWidth / 2 - 4);
+    for (const [, controls] of GROUPS) for (const [k] of controls) { inputs[k].value = design[k]; outputs[k].textContent = design[k]; }
+    for (const [k] of COLORS) { inputs[`c-${k}`].value = design.colors[k].toLowerCase(); outputs[`c-${k}`].textContent = design.colors[k]; }
+    const dirty = JSON.stringify(design) !== JSON.stringify(saved);
+    $('save').textContent = dirty ? 'SAVE DESIGN *' : 'SAVE DESIGN';
+    if (dirty && status.className === 'ok') { status.textContent = ''; status.className = ''; }
+  }
+
+  $('grid').onchange = e => { $('gridlayer').style.display = e.target.checked ? '' : 'none'; };
+  $('revert').onclick = () => { design = saved; render(); };
+
+  $('save').onclick = async () => {
+    status.className = '';
+    status.textContent = 'Saving…';
+    try {
+      const res = await fetch('/save', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(design) });
+      if (!res.ok) throw new Error(await res.text());
+      saved = design;
+      status.className = 'ok';
+      status.textContent = 'Saved to byte-design.json. byte.svg and byte-mascot.js are rebuilt.';
+    } catch (err) {
+      status.className = 'err';
+      status.textContent = `Couldn't save: ${err.message}. Start the tools with "node serve.mjs".`;
+    }
+    render();
+  };
+
+  fetch('byte-design.json', { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : DEFAULT_DESIGN, () => DEFAULT_DESIGN)
+    .then(d => { design = saved = normalize(d); render(); });
+</script>
+</body>
+</html>

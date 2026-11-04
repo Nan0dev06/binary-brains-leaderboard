@@ -1,0 +1,15 @@
+{
+  "colors": {
+    "body": "#56B776",
+    "outline": "#031B0E",
+    "phones": "#26302C",
+    "lights": "#A6FFC4"
+  },
+  "hornHeight": 10,
+  "hornWidth": 6,
+  "hornLean": 4,
+  "headWidth": 26,
+  "bodyHeight": 16,
+  "flare": 2,
+  "legLength": 6
+}

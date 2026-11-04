@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Binary Brains Leaderboard</title>
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/byte.css">
   <link rel="stylesheet" href="css/display.css">
 </head>
 <body class="display">
@@ -36,7 +35,7 @@
     <aside class="side">
       <div class="byte-wrap">
         <div class="bubble" id="bubble"></div>
-        <div class="byte-holder" id="byte"></div>
+        <div class="byte-holder"><byte-mascot id="byte" state="idle"></byte-mascot></div>
       </div>
       <div class="feed">
         <h2 class="mono">&gt; RECENT</h2>
@@ -58,7 +57,7 @@
   <script src="js/icons.js"></script>
   <script src="js/store.js"></script>
   <script src="js/sound.js"></script>
-  <script src="js/byte.js"></script>
+  <script src="byte/byte-mascot.js"></script>
   <script src="js/fx.js"></script>
   <script src="js/display.js"></script>
 </body>

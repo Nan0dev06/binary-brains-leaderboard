@@ -14,9 +14,9 @@
 - [x] Side-by-side design comparison PDF in `screenshots/`
 - [x] Real CC0 arcade sound files (Juhani Junkala collection) with synth fallback, test page `sounds.html`
 - [x] Byte as a component SVG with blink / hop / cheer / glitch
+- [x] New green Byte in `byte/` (designer, 4 modes, 14 reactions) wired to the display's events
 
 ## Next
-- [ ] Byte: being designed in a separate session; merge his new SVG here when ready
 - [ ] Collect opinions on the comparison PDF and pick a design
 - [ ] Screenshots in README once the design is approved
 
