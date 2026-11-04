@@ -72,7 +72,7 @@ main { display: grid; grid-template-columns: 1fr 320px; gap: 22px; align-items: 
 .wide { width: 100%; padding: 12px; font-size: 15px; }
 .row { display: flex; gap: 8px; }
 .row .btn { padding: 0 18px; }
-input[type=number], input[type=text] {
+input[type=number], input[type=text], input[type=password] {
   flex: 1; min-width: 0;
   font: 600 16px var(--font-display);
   color: var(--text);
@@ -106,6 +106,18 @@ input:focus-visible { outline: 2px solid var(--green); outline-offset: 1px; }
 .confirm .small { margin-top: 0; }
 .confirm .small b { color: var(--text); }
 .confirm .row .btn { padding: 10px 14px; }
+
+/* Byte controls: locked until the password is typed */
+.byte-panel { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.byte-panel[hidden] { display: none; }
+.byte-preview { display: block; width: 130px; margin: 0 auto 4px; }
+.byte-panel h3 { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-top: 6px; }
+.byte-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.byte-grid .btn { padding: 9px 6px; font-size: 13px; text-transform: capitalize; }
+.byte-panel .row .btn { padding: 0 16px; }
+.byte-auto { display: flex; gap: 10px; align-items: flex-start; margin-top: 6px; font-size: 14px; color: var(--muted); cursor: pointer; }
+.byte-auto input { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--green); flex: none; cursor: pointer; }
+.byte-auto b { color: var(--text); margin-right: 4px; }
 
 @keyframes pop { 35% { transform: scale(1.2); } }
 @keyframes ripple { to { transform: scale(18); opacity: 0; } }

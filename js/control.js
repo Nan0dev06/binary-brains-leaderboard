@@ -149,6 +149,73 @@
   });
   resetForm.addEventListener('keydown', e => { if (e.key === 'Escape') closeReset(); });
 
+  // Byte controls: opening needs the password, closing locks them again.
+  // A light lock against stray clicks, not real security (it is readable in this file).
+  const BYTE_PASSWORD = 'meow';
+  const Mascot = customElements.get('byte-mascot');
+  const byteOpen = $('byte-open');
+  const byteLock = $('byte-lock');
+  const bytePass = $('byte-pass');
+  const bytePanel = $('byte-panel');
+  const preview = $('byte-preview');
+
+  function setByteOpen(open) {
+    bytePanel.hidden = !open;
+    byteLock.hidden = true;
+    byteOpen.hidden = false;
+    bytePass.value = '';
+    $('byte-lock-msg').textContent = '';
+    byteOpen.setAttribute('aria-expanded', open);
+    byteOpen.textContent = open ? 'Close and lock Byte controls' : 'Open Byte controls';
+  }
+  byteOpen.addEventListener('click', () => {
+    SFX.click();
+    if (!bytePanel.hidden) { setByteOpen(false); return; }
+    byteOpen.hidden = true;
+    byteLock.hidden = false;
+    bytePass.focus();
+  });
+  $('byte-lock-cancel').addEventListener('click', () => setByteOpen(false));
+  byteLock.addEventListener('keydown', e => { if (e.key === 'Escape') setByteOpen(false); });
+  byteLock.addEventListener('submit', e => {
+    e.preventDefault();
+    if (bytePass.value.trim().toLowerCase() === BYTE_PASSWORD) { setByteOpen(true); return; }
+    bytePass.value = '';
+    $('byte-lock-msg').textContent = 'Wrong password.';
+    bytePass.focus();
+  });
+
+  // Every button plays on the projector and on the small preview here.
+  function byteButtons(el, names, play) {
+    names.forEach(name => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'btn';
+      b.textContent = name;
+      b.addEventListener('click', () => { SFX.click(); play(name); toast(`Byte: ${name}`); });
+      el.appendChild(b);
+    });
+  }
+  if (Mascot) {
+    byteButtons($('byte-modes'), Mascot.STATES, name => { ByteLink.send('state', { name }); preview.state = name; });
+    byteButtons($('byte-reactions'), Mascot.REACTIONS, name => { ByteLink.send('react', { name }); preview.react(name); });
+  }
+  $('byte-say').addEventListener('submit', e => {
+    e.preventDefault();
+    const text = $('byte-text').value.trim();
+    if (!text) return;
+    SFX.click();
+    ByteLink.send('say', { text });
+    if (Mascot) preview.say(text);
+    $('byte-text').value = '';
+    toast('Byte is saying it on the projector');
+  });
+  $('byte-auto').checked = ByteLink.auto();
+  $('byte-auto').addEventListener('change', e => {
+    ByteLink.send('auto', { on: e.target.checked });
+    toast(e.target.checked ? 'Byte auto routine on' : 'Byte auto routine off');
+  });
+
   // 1-4: +1, Shift+1-4: -1, Ctrl+Z: undo, M: mute (ignored while typing)
   addEventListener('keydown', e => {
     if (e.repeat || e.target.tagName === 'INPUT') return;

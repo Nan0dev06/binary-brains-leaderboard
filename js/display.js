@@ -146,7 +146,7 @@
     if (Date.now() < holdUntil) return;
     tipIndex = (tipIndex + 1) % TIPS.length;
     say(TIPS[tipIndex], 0);
-    if (tipIndex % 2 === 0 && byte.state === 'idle') byte.react('wave');  // catch the eye of people walking by
+    if (tipIndex % 2 === 0 && byte.state === 'idle' && !byte.attract) byte.react('wave');  // catch the eye of people walking by
   }, 12000);
 
   // ---------- Byte between events: idle, then his laptop, then a nap ----------
@@ -160,6 +160,7 @@
     else byte.state = 'idle';
   }
   setInterval(() => {
+    if (byte.attract) return;  // Auto (staff panel) runs his own routine instead
     const quiet = Date.now() - lastScore;
     if (quiet > NAP_AFTER && byte.state === 'laptop') {
       byte.react('yawn').then(() => { if (Date.now() - lastScore > NAP_AFTER) byte.state = 'sleep'; });
@@ -167,6 +168,16 @@
       byte.state = 'laptop';
     }
   }, 5000);
+
+  // ---------- Byte commands from the staff panel (js/byte-link.js) ----------
+  byte.attract = ByteLink.auto();
+  ByteLink.listen(cmd => {
+    lastScore = Date.now();  // staff is driving him, so hold off the laptop and nap
+    if (cmd.type === 'react') byte.react(cmd.name);
+    else if (cmd.type === 'state') byte.state = cmd.name;
+    else if (cmd.type === 'say') say(String(cmd.text).slice(0, 80), 8000);
+    else if (cmd.type === 'auto') byte.attract = cmd.on;
+  });
 
   function banner(kicker, text, color) {
     bannerEl.style.setProperty('--c', color);

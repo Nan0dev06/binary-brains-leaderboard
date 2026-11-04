@@ -42,6 +42,33 @@
         <ul id="log" class="log"></ul>
       </div>
 
+      <div class="card byte-card">
+        <h2 class="mono">Byte</h2>
+        <button class="btn wide" id="byte-open" type="button" aria-expanded="false" aria-controls="byte-panel">Open Byte controls</button>
+        <form class="confirm" id="byte-lock" autocomplete="off" hidden>
+          <label class="muted small" for="byte-pass">Type the password to control Byte on the projector.</label>
+          <input id="byte-pass" type="password" spellcheck="false">
+          <div class="row">
+            <button class="btn" type="submit">Unlock</button>
+            <button class="btn" type="button" id="byte-lock-cancel">Cancel</button>
+          </div>
+          <p class="muted small" id="byte-lock-msg" role="status"></p>
+        </form>
+        <div class="byte-panel" id="byte-panel" hidden>
+          <byte-mascot class="byte-preview" id="byte-preview"></byte-mascot>
+          <h3 class="mono">Mode</h3>
+          <div class="byte-grid" id="byte-modes"></div>
+          <h3 class="mono">React</h3>
+          <div class="byte-grid" id="byte-reactions"></div>
+          <h3 class="mono">Say</h3>
+          <form class="row" id="byte-say" autocomplete="off">
+            <input id="byte-text" type="text" maxlength="80" placeholder="What should Byte say?" aria-label="What Byte says">
+            <button class="btn" type="submit">Say</button>
+          </form>
+          <label class="byte-auto"><input type="checkbox" id="byte-auto"><span><b>Auto</b> Byte runs his own routine on the projector</span></label>
+        </div>
+      </div>
+
       <div class="card danger-zone">
         <h2 class="mono">Reset</h2>
         <button class="btn wide danger" id="reset" type="button">Reset all scores</button>
@@ -63,6 +90,8 @@
   <script src="js/icons.js"></script>
   <script src="js/store.js"></script>
   <script src="js/sound.js"></script>
+  <script src="byte/byte-mascot.js"></script>
+  <script src="js/byte-link.js"></script>
   <script src="js/control.js"></script>
 </body>
 </html>
